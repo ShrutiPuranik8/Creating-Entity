@@ -1,1 +1,76 @@
-Compare
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <!-- ========================================================= -->
+    <!-- ======================== Defaults ======================= -->
+    <!-- ========================================================= -->
+    <title>Entity of OfbizDemo Component</title>
+    <description>None</description>
+    <copyright></copyright>
+    <version></version>
+
+
+    <entity entity-name="OfbizDemoType" package-name="org.apache.ofbiz.ofbizdemo" title="OfbizDemo Type Entity">
+        <field name="ofbizDemoTypeId" type="id"><description>primary sequenced ID</description></field>
+        <field name="description" type="description"></field>
+        <prim-key field="ofbizDemoTypeId"/>
+    </entity>
+
+    <entity entity-name="OfbizDemo" package-name="org.apache.ofbiz.ofbizdemo" title="OfbizDemo Entity">
+        <field name="ofbizDemoId" type="id"><description>primary sequenced ID</description></field>
+        <field name="ofbizDemoTypeId" type="id"></field>
+        <field name="firstName" type="name"></field>
+        <field name="lastName" type="name"></field>
+        <field name="comments" type="comment"></field>
+        <prim-key field="ofbizDemoId"/>
+        <relation type="one" fk-name="ODEM_OD_TYPE_ID" rel-entity-name="OfbizDemoType">
+            <key-map field-name="ofbizDemoTypeId"/>
+        </relation>
+    </entity>
+
+    <entity entity-name="EmployeeType" package-name="org.apache.ofbiz.ofbizdemo" title="Employee Type Entity">
+        <field name="employeeTypeId" type="id"><description>primary sequenced ID</description></field>
+        <field name="description" type="description"></field>
+        <prim-key field="employeeTypeId"/>
+    </entity>
+
+    <entity entity-name="Employee" package-name="org.apache.ofbiz.ofbizdemo" title="Employee Entity">
+
+        <field name="employeeId" type="id"><description>primary sequenced ID</description></field>
+        <field name="employeeTypeId" type="id"></field>
+        <field name="firstName" type="name"></field>
+        <field name="lastName" type="name"></field>
+        <field name="comments" type="comment"></field>
+        <field name="emailContactMechId" type="id"></field>
+        <field name="postalContactMechId" type="id"></field>
+        <field name="telecomContactMechId" type="id"></field>
+        <field name="contactMechTypeId" type="id"></field>
+        <field name="infoString" type="long-varchar"></field>
+        <prim-key field="employeeId"/>
+
+        <relation type="one" fk-name="Emp_TYPE_ID" rel-entity-name="EmployeeType">
+            <key-map field-name="employeeTypeId"/>
+        </relation>
+
+        <relation type="one" fk-name="ContactMech_TYPE_ID" rel-entity-name="ContactMech">
+            <key-map field-name="emailContactMechId" rel-field-name="contactMechId"/>
+        </relation>
+
+        <relation type="one" fk-name="Con_TYPE_ID" rel-entity-name="ContactMechType">
+            <key-map field-name="contactMechTypeId"/>
+        </relation>
+
+        <relation type="one" rel-entity-name="ContactMech">
+            <key-map field-name="contactMechId"/>
+        </relation>
+
+        <relation type="one" rel-entity-name="PostalAddress">
+            <key-map field-name="postalContactMechId" rel-field-name="contactMechId"/>
+        </relation>
+
+        <relation type="one" rel-entity-name="TelecomNumber">
+            <key-map field-name="telecomContactMechId" rel-field-name="contactMechId"/>
+        </relation>
+
+    </entity>
+
+</entitymodel>
